@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+
+<context:annotation-config/>
+	<context:component-scan base-package="com.qianj.dubbo.**" />  
+	
+	
+	<dubbo:application name="dubbo-api" />
+	<dubbo:registry address="zookeeper://127.0.0.1:8501" />
+	<dubbo:protocol name="dubbo" port="20880" />
+	<dubbo:reference interface="com.qianj.dubbo.service.OrderService" id="orderServiceImpl"/> 
+	<!-- <dubbo:reference interface="com.spring.demo.order.service.OrderService" id="orderServiceImpl"/> -->
+</beans>

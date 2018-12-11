@@ -1,0 +1,93 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.qianj.simpleDubbo</groupId>
+    <artifactId>simpleDubbo</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>com.qianj.dubbo.service.impl</groupId>
+  <artifactId>dubbo-service</artifactId>
+  <packaging>jar</packaging>
+  
+  <dependencies>
+ 
+		 <dependency>
+		 	<groupId>com.qianj.dubbo.service</groupId>
+		  <artifactId>dubbo-face</artifactId>
+		  <version>0.0.1-SNAPSHOT</version>
+		 </dependency>
+  </dependencies>
+  
+  <build>
+    <plugins>
+        
+        <!-- 将依赖打成class文件 -->
+      <!--  <plugin>  
+            <groupId>org.apache.maven.plugins</groupId>  
+            <artifactId>maven-assembly-plugin</artifactId>  
+            <version>2.6</version>  
+            <configuration>  
+                <archive>  
+                    <manifest>  
+                        <mainClass>com.spring.demo.ApplicationService</mainClass>  
+                    </manifest>  
+                </archive>  
+                <descriptorRefs>  
+                    <descriptorRef>jar-with-dependencies</descriptorRef>  
+                </descriptorRefs>  
+            </configuration>
+             <executions>  
+                <execution>  
+                    <id>make-assembly</id>  
+                    <phase>package</phase>  
+                    <goals>  
+                        <goal>single</goal>  
+                    </goals>  
+                </execution>  
+            </executions>    
+
+	  </plugin> -->
+	  
+	  <!-- maven-jar-plugin负责生成指定入口的可执行JAR文件。同时在manifest.mf文件里写入入口函数信息和classpath -->
+	   <plugin>
+	    <groupId>org.apache.maven.plugins</groupId>
+	    <artifactId>maven-jar-plugin</artifactId>
+	    <configuration>
+	        <source>1.8</source>
+	        <target>1.8</target>
+	        <archive>
+	            <manifest>
+	                <mainClass>com.qianj.dubbo.service.ApplicationService</mainClass>
+	                <addClasspath>true</addClasspath>
+	            <classpathPrefix>lib/</classpathPrefix>
+	            </manifest>
+	
+	        </archive>
+	        <classesDirectory>
+	        </classesDirectory>
+	    </configuration>
+	</plugin>  
+	
+		<!-- maven-dependency-plugin负责创建lib目录，同时把需要依赖的jar包全部复制进去 -->
+		  <plugin>
+		      <artifactId>maven-dependency-plugin</artifactId>
+		      <executions>
+		          <execution>
+		              <id>copy-dependencies</id>
+		              <phase>prepare-package</phase>
+		              <goals>
+		                  <goal>copy-dependencies</goal>
+		              </goals>
+		          </execution>
+		      </executions>
+		      <configuration>
+		          <includeTypes>jar</includeTypes>
+		          <overWriteSnapshots>true</overWriteSnapshots>
+		          <type>jar</type>
+		          <outputDirectory>${project.build.directory}/lib</outputDirectory>
+		      </configuration>
+	    </plugin> 
+	        
+	    </plugins>
+	</build>
+</project>
